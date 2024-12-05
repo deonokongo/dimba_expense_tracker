@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Reports - Dimba Personal Expense Tracker {% endblock %}
+
+{% block content %}
+{% comment %} {% if user.is_authenticated %}
+    <form method="post" action="{% url 'dimba_app:logout' %}" class="d-flex justify-content-end">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-danger ">Logout</button>
+    </form>
+{% else %}
+    <p>You must be logged in to view this page.</p>
+    <a href="{% url 'dimba_app:login' %}" class="btn btn-primary">Login</a>
+{% endif %} {% endcomment %}
+<!-- Reports Section -->
+<section id="reports" class="reports section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Expense Reports</h2>
+        <p>Access detailed reports for your daily and monthly expenses. Download them for further review or record-keeping.</p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+        <!-- Search and Date Selection -->
+        <div class="row gy-4">
+            <div class="col-md-6">
+                <input type="text" id="report-search" class="form-control" placeholder="Search for a report...">
+            </div>
+            <div class="col-md-6">
+                <input type="date" id="report-date" class="form-control" placeholder="Select a date">
+            </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="table-responsive mt-4">
+            <table class="table table-striped" id="reports-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Report Type</th>
+                        <th>Description</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Report Row (Daily) -->
+                    <tr class="daily-report" data-report-date="2024-11-27">
+                        <td>2024-11-27</td>
+                        <td>Daily Report</td>
+                        <td>Details of all expenses for today</td>
+                        <td><a href="/download/daily-2024-11-27" class="btn btn-primary">Download</a></td>
+                    </tr>
+                    <!-- Example Report Row (Monthly) -->
+                    <tr class="monthly-report" data-report-date="2024-11">
+                        <td>2024-11</td>
+                        <td>Monthly Report</td>
+                        <td>Overview of all expenses for November 2024</td>
+                        <td><a href="/download/monthly-2024-11" class="btn btn-primary">Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- End Container -->
+
+</section><!-- End Reports Section -->
+
+<script>
+    // Search Functionality
+    const searchInput = document.getElementById('report-search');
+    const tableRows = document.querySelectorAll('#reports-table tbody tr');
+
+    searchInput.addEventListener('keyup', function() {
+        const searchValue = searchInput.value.toLowerCase();
+        tableRows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            if (rowText.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // Date Filter Functionality
+    const dateInput = document.getElementById('report-date');
+
+    dateInput.addEventListener('change', function() {
+        const selectedDate = dateInput.value;
+        tableRows.forEach(row => {
+            const rowDate = row.getAttribute('data-report-date');
+            if (rowDate.startsWith(selectedDate)) { // Check if the report's date matches the selected date
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+<h2 class="text-center mb-4">Financial Overview</h2>
+
+<div class="container">
+    <canvas id="financialPieChart" style="width: 200px; height: 200px;"></canvas>
+</div>
+
+<script>
+    var ctx = document.getElementById('financialPieChart').getContext('2d');
+    var financialPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Expenses', 'Savings', 'Loans'],  // Labels for the chart
+            datasets: [{
+                label: 'Financial Overview',
+                data: [
+                    {{ total_expenses }},  // Data passed from the view for expenses
+                    {{ total_savings }},   // Data passed from the view for savings
+                    {{ total_loans }}      // Data passed from the view for loans
+                ],
+                backgroundColor: ['#FF5733', '#28A745', '#007BFF'],  // Colors for the sections
+                borderColor: ['#FF5733', '#28A745', '#007BFF'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2);  // Format the tooltip value
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Dimba Personal Expense Tracker {% endblock %}
+
+{% block content %}
+<!-- About Section -->
+<section id="about" class="about section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>About Dimba Personal Expense Tracker<br></h2>
+        <p>Dimba is designed to help you manage your personal finances effortlessly. Whether you're tracking daily expenses or analyzing your monthly spending trends, Dimba is here to provide insights that empower you to make smarter financial decisions.</p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                <p>
+                    With Dimba, you can easily track your expenses, categorize them, and stay on top of your savings goals. Our app simplifies budgeting, helping you manage your money and achieve financial stability.
+                </p>
+                <ul>
+                    <li><i class="bi bi-check2-circle"></i> <span>Effortlessly track and categorize your daily expenses.</span></li>
+                    <li><i class="bi bi-check2-circle"></i> <span>Get insights into spending trends to improve budgeting.</span></li>
+                    <li><i class="bi bi-check2-circle"></i> <span>Set and track savings goals to build a secure financial future.</span></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <p>Dimba offers an intuitive interface to enter and manage your expenses. With powerful features like expense categorization and savings tracking, the app helps you take control of your personal finances like never before.</p>
+                <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!-- /About Section -->
+
+<!-- About Alt Section -->
+<section id="about-alt" class="about-alt section">
+
+    <div class="container">
+
+        <div class="row gy-4">
+            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+                <img src="{% static 'assets/img/about.png' %}" class="img-fluid" alt="">
+                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+            </div>
+            <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+                <h3>Track and Control Your Finances with Dimba</h3>
+                <p class="fst-italic">
+                    Dimba is a comprehensive tool that allows you to track your income and expenses, plan budgets, and visualize your financial progress over time. Whether you're saving for a vacation, a new gadget, or simply trying to reduce debt, Dimba has you covered.
+                </p>
+                <ul>
+                    <li><i class="bi bi-check2-all"></i> <span>Set budget limits and track your spending to stay on target.</span></li>
+                    <li><i class="bi bi-check2-all"></i> <span>Use the savings tracker to visualize your financial goals and progress.</span></li>
+                    <li><i class="bi bi-check2-all"></i> <span>Generate detailed reports to analyze your spending patterns over time.</span></li>
+                </ul>
+                <p>
+                    By analyzing your spending habits, Dimba helps you make better financial decisions, leading to smarter savings and a more secure financial future. Start tracking your expenses today and take control of your financial destiny.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section><!-- /About Alt Section -->
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Dimba - Expenses{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'dimba_app:logout' %}" class="d-flex justify-content-end">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-danger ">Logout</button>
+    </form>
+{% else %}
+    <p>You must be logged in to view this page.</p>
+    <a href="{% url 'dimba_app:login' %}" class="btn btn-primary">Login</a>
+{% endif %}
+<!-- Main Container -->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar shadow-sm">
+            <div class="position-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'dimba_app:dashboard' %}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:expenses' %}">
+                            Expenses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:savings' %}">
+                            Savings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:reports' %}">
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:loans' %}">
+                            Loans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:profile' %}">
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <!-- Section: Header -->
+            <section class="py-4">
+                <h2>Expenses</h2>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+                        Add Expense
+                    </button>
+                </div>
+            </section>
+
+            <!-- Section: Expense Cards -->
+            <section class="py-4">
+                <div class="row g-3">
+                    {% for expense in expenses %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ expense.category }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${{ expense.amount }}</h6>
+                                <p class="card-text">{{ expense.description }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">{{ expense.date }}</small>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'dimba_app:update_expense' expense.id %}" class="btn btn-outline-primary btn-sm">
+                                        Edit
+                                    </a>
+                                    <a href="{% url 'dimba_app:delete_expense' expense.id %}" class="btn btn-outline-danger btn-sm">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No expenses found. Add one to get started!</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<!-- Add Expense Modal -->
+<section>
+    <div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'dimba_app:add_expense' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Expense Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Food">Food</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" value="{ expense.date|date:'Y-m-d' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image">Upload Receipt</label>
+                            <input type="file" name="image" id="image" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Add Expense</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title%} Edit Expense {% endblock%}
+
+{% block content %}
+<form 
+    method="post" 
+    class="container mt-4 p-3 shadow rounded" 
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="mb-4 text-center">Edit Expense</h2>
+
+    <div class="row gy-4">
+        <div class="col-md-12">
+            <label for="name" class="form-label">Name</label>
+            <input 
+                type="text" 
+                name="name" 
+                class="form-control" 
+                placeholder="Expense Name" 
+                id="name" 
+                value="{{ expense.name }}" 
+                required>
+        </div>
+
+        <div class="col-md-12">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Food">Food</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+        <div class="col-md-12">
+            <label for="amount" class="form-label">Amount</label>
+            <input 
+                type="number" 
+                class="form-control" 
+                name="amount" 
+                id="amount" 
+                value="{{ expense.amount }}" 
+                placeholder="Amount" 
+                required>
+        </div>
+        <div class="col-md-12">
+            <label for="date" class="form-label">Date</label>
+            <input 
+                type="date" 
+                class="form-control" 
+                name="date" 
+                id="date" 
+                value="{{ expense.date|date:'Y-m-d' }}" 
+                placeholder="Date" 
+                required>
+        </div>
+
+        <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea 
+                class="form-control" 
+                name="description" 
+                rows="6" 
+                id="description" 
+                placeholder="Description" 
+                required>{{ expense.description }}</textarea>
+        </div>
+        <div class="col-md-12">
+            <label for="image">Edit Receipt</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
+
+        <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+            </div>
+        {% comment %} <button type="submit" class="btn btn-primary px-4">Update Contact</button> {% endcomment %}
+        </div>
+    </div>
+</form>
+{% endblock %}

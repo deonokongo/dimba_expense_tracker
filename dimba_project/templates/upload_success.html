@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Successful{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Upload Successful!</h2>
+    <img src="{{file_url}}" alt="">
+    <a href="{% url 'dimba_app:upload' %}" class="btn btn-primary mt-3 btn-sm btn-lg d-block mx-auto" style="width: 150px; height: 50px">Upload Another Receipt</a>
+</div>
+{% endblock %}

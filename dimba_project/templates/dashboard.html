@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Dimba - Dashboard{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'dimba_app:logout' %}" class="d-flex justify-content-end">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-danger ">Logout</button>
+    </form>
+{% else %}
+    <p>You must be logged in to view this page.</p>
+    <a href="{% url 'dimba_app:login' %}" class="btn btn-primary">Login</a>
+{% endif %}
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'dimba_app:dashboard' %}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:expenses' %}">
+                            Expenses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:savings' %}">
+                            Savings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:reports' %}">
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:loans' %}">
+                            Loans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:profile' %}">
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h2 class="mt-4">Dashboard</h2>
+
+            <!-- Search Bar -->
+            <div class="mb-3">
+                <form method="get" action="{% url 'dimba_app:dashboard' %}" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search by expense or saving's name">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+
+            <!-- Expenses Table -->
+            <div class="table-responsive mb-2 table table-striped table-hover">
+                <h4>Added Expenses</h4>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                        <tr>
+                            <td>{{ expense.id }}</td>
+                            <td>{{ expense.name }}</td>
+                            <td>{{ expense.category }}</td>
+                            <td>${{ expense.amount }}</td>
+                            <td>{{ expense.date }}</td> 
+                            <td>{{ expense.description }}</td>
+                            <td>
+
+                            <a href="{% url 'dimba_app:update_expense' id=expense.id  %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'dimba_app:delete_expense' expense.id %}" 
+                            class="btn btn-danger" 
+                            onclick="return confirm('Are you sure you want to delete this expense?');">
+                            Delete
+                         </a>
+                        </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No expenses found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Savings Table -->
+            <div class=" table-responsive mb-4">
+                <h4>Added Savings</h4>
+                <table class="table  table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for saving in savings %}
+                        <tr>
+                            <td>{{ saving.id }}</td>
+                            <td>{{ saving.name }}</td>
+                            <td>{{ saving.type }}</td>
+                            <td>${{ saving.amount }}</td>
+                            <td>{{ saving.date }}</td>
+                            <td>{{ saving.description }}</td>
+                            <td>
+
+                            <a href="{% url 'dimba_app:update_saving' id=saving.id  %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'dimba_app:delete_saving' saving.id %}" 
+                            class="btn btn-danger" 
+                            onclick="return confirm('Are you sure you want to delete this saving?');">
+                            Delete
+                         </a>
+                        </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">No savings found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                    <!-- Savings Table -->
+                    <div class="table-responsive mb-4">
+                        <h4>Added Loans</h4>
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for loan in loans %}
+                                <tr>
+                                    <td>{{ loan.id }}</td>
+                                    <td>{{ loan.name }}</td>
+                                    <td>{{ loan.category }}</td>
+                                    <td>${{ loan.amount }}</td>
+                                    <td>{{ loan.date }}</td>
+                                    <td>{{ loan.description }}</td>
+                                    <td>
+                                    <a href="{% url 'dimba_app:update_loan' id=loan.id  %}" class="btn btn-primary">Edit</a>
+                                    
+                                    <a href="{% url 'dimba_app:delete_loan' loan.id %}" 
+                            class="btn btn-danger" 
+                            onclick="return confirm('Are you sure you want to delete this loan?');">
+                            Delete
+                         </a>
+                        </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4">No loans found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                       
+             <!-- Expense Pie Chart
+            <div class="container">
+                <h2 class="text-center my-4">Financial Reports</h2>
+            
+                 Expenses Pie Chart -->
+                <div class="chart-container my-4" style="width: 300px; height: 300px; margin: auto;">
+                    <h5 class="text-center">Expenses</h5>
+                    <canvas id="expensesChart"></canvas>
+                </div>
+            
+                <!-- Savings Pie Chart -->
+                <div class="chart-container my-4" style="width: 300px; height: 300px; margin: auto;">
+                    <h5 class="text-center">Savings</h5>
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            
+                <!-- Loans Pie Chart -->
+                <div class="chart-container my-4" style="width: 300px; height: 300px; margin: auto;">
+                    <h5 class="text-center">Loans</h5>
+                    <canvas id="loansChart"></canvas>
+                </div>
+
+            </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Expenses Chart
+    const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+    new Chart(expensesCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ expenses_labels|safe }},
+            datasets: [{
+                data: {{ expenses_data|safe }},
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+            }]
+        }
+    });
+
+    // Savings Chart
+    const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+    new Chart(savingsCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ savings_labels|safe }},
+            datasets: [{
+                data: {{ savings_data|safe }},
+                backgroundColor: ['#36A2EB', '#4BC0C0', '#FFCE56', '#FF6384', '#9966FF']
+            }]
+        }
+    });
+
+    // Loans Chart
+    const loansCtx = document.getElementById('loansChart').getContext('2d');
+    new Chart(loansCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ loans_labels|safe }},
+            datasets: [{
+                data: {{ loans_data|safe }},
+                backgroundColor: ['#FFCE56', '#4BC0C0', '#36A2EB', '#FF6384', '#9966FF']
+            }]
+        }
+    });
+</script>
+{% endblock %}

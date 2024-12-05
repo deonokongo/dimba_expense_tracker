@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title%} Edit loan {% endblock%}
+
+{% block content %}
+<form 
+    method="post" 
+    class="container mt-4 p-3 shadow rounded" 
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="mb-4 text-center">Edit Loan</h2>
+
+    <div class="row gy-4">
+        <div class="col-md-12">
+            <label for="name" class="form-label">Name</label>
+            <input 
+                type="text" 
+                name="name" 
+                class="form-control" 
+                placeholder="loan Name" 
+                id="name" 
+                value="{{ loan.name }}" 
+                required>
+        </div>
+        <div class="col-md-12">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" name="category" required>
+                <option value="">Select a category</option>
+                <option value="Sacco Loan">Sacco Loan</option>
+                <option value="Bank Loan">Bank Loan</option>
+                <option value="Mortgage">Mortgage</option>
+                <option value="Car Loan">Car Loan</option>
+                <option value="Family and Friends">Family and Friends</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="col-md-12">
+            <label for="amount" class="form-label">Amount</label>
+            <input 
+                type="number" 
+                class="form-control" 
+                name="amount" 
+                id="amount" 
+                value="{{ loan.amount }}" 
+                placeholder="Amount" 
+                required>
+        </div>
+        <div class="col-md-12">
+            <label for="date" class="form-label">Date</label>
+            <input 
+                type="date" 
+                class="form-control" 
+                name="date" 
+                id="date" 
+                value="{{ loan.date|date:'Y-m-d' }}" 
+                placeholder="Date" 
+                required>
+        </div>
+
+        <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea 
+                class="form-control" 
+                name="description" 
+                rows="6" 
+                id="description" 
+                placeholder="Description" 
+                required>{{ loan.description }}</textarea>
+        </div>
+        <div class="col-md-12">
+            <label for="image">Edit Receipt</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
+
+        <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+            </div>
+        {% comment %} <button type="submit" class="btn btn-primary px-4">Update Contact</button> {% endcomment %}
+        </div>
+    </div>
+</form>
+{% endblock %}

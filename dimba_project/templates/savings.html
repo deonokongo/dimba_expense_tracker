@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Dimba - Savings{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'dimba_app:logout' %}" class="d-flex justify-content-end">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-danger ">Logout</button>
+    </form>
+{% else %}
+    <p>You must be logged in to view this page.</p>
+    <a href="{% url 'dimba_app:login' %}" class="btn btn-primary">Login</a>
+{% endif %}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Side Panel -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'dimba_app:dashboard' %}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:expenses' %}">
+                            Expenses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:savings' %}">
+                            Savings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:reports' %}">
+                            Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:loans' %}">
+                            Loans
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dimba_app:profile' %}">
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <h2 class="mt-4">Savings</h2>
+            <!-- Add saving Button -->
+            <div class="d-flex justify-content-end mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addsavingModal">
+                    Add Saving
+                </button>
+            </div>
+
+            <!-- savins Cards -->
+            <div class="row">
+                {% for saving in savings %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ saving.category }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${{ saving.amount }}</h6>
+                            <p class="card-text">{{ saving.description }}</p>
+                            <p class="card-text"><small class="text-muted">{{ saving.date }}</small></p>
+                            <a href="{% url 'edit_saving' saving.id %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'delete_saving' saving.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No savings found. Add one to get started!</p>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Add saving Modal -->
+<section>
+    <div class="modal fade" id="addsavingModal" tabindex="-1" aria-labelledby="addsavingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addsavingModalLabel">Add Saving</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'dimba_app:add_saving' %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Saving Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">Select a type</option>
+                                <option value="Food">Sacco</option>
+                                <option value="Food">Emergency Fund</option>
+                                <option value="Transportation">Fixed Deposit</option>
+                                <option value="Entertainment">Insurance Plan</option>
+                                <option value="Bills">Bank</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image">Upload Receipt</label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Add Saving</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

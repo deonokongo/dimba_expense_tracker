@@ -1,0 +1,346 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Home Page</title>
+  <meta name="description" content="Track your personal or business expenses effortlessly with our intuitive expense tracker app.">
+  <meta name="keywords" content="expense tracker, budget, finance management, personal finance, business expense tracking">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <!-- Favicons -->
+  <link href="{%static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{%static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{%static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{%static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{%static 'assets/css/main.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="home-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top bg-secondary text-white">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="base.html" class="logo d-flex align-items-center me-auto">
+        <img src="{% static 'assets/img/logo.png' %}" alt="">
+        <h1 class="sitename"><strong>Dimba</strong></h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu text-white">
+        <ul>
+          <ul class="nav justify-content-center" style="margin: 0; padding: 0; list-style: none;">
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:home' %}" class="nav-link text-white px-3">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:features' %}" class="nav-link text-white px-3">Features</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:track_expenses' %}" class="nav-link text-white px-3"> Track Expenses</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:reports' %}" class="nav-link text-white px-3">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:about' %}" class="nav-link text-white px-3">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:contact' %}" class="nav-link text-white px-3">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'dimba_app:team' %}" class="nav-link text-white px-3">Team</a>
+            </li>
+          {% comment %} <li><a href="{% url 'dimba_app:login' %}">Login</a></li> {% endcomment %}
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="{% url 'dimba_app:login' %}">Login</a>
+
+    </div>
+  </header>
+  {% block content %}
+  <main class="main">
+    <!-- Hero Section -->
+<section id="hero" class="hero section">
+
+  <img src="{% static 'assets/img/hero-bg-abstract.jpg' %}" alt="" data-aos="fade-in" class="">
+
+  <div class="container">
+    <div class="row justify-content-center" data-aos="zoom-out">
+      <div class="col-xl-7 col-lg-9 text-center">
+        <h1>Track Your Expenses with Dimba</h1>
+        <p>Dimba is an easy-to-use personal expense tracker that helps you manage your finances, track daily and monthly expenses, and achieve your financial goals.</p>
+      </div>
+    </div>
+    <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
+      <a href="{% url 'dimba_app:register' %}" class="btn-get-started">Register</a>
+    </div>
+
+    <div class="row gy-4 mt-5">
+      <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
+        <div class="icon-box">
+          <div class="icon"><i class="bi bi-wallet"></i></div>
+          <h4 class="title"><a href="">Track Expenses</a></h4>
+          <p class="description">Easily track your daily and monthly expenses, helping you stay within your budget.</p>
+        </div>
+      </div><!-- End Icon Box -->
+
+      <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200">
+        <div class="icon-box">
+          <div class="icon"><i class="bi bi-pie-chart"></i></div>
+          <h4 class="title"><a href="">Expense Insights</a></h4>
+          <p class="description">Get detailed insights into your spending habits with visual reports and trends.</p>
+        </div>
+      </div><!-- End Icon Box -->
+
+      <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="300">
+        <div class="icon-box">
+          <div class="icon"><i class="bi bi-bank"></i></div>
+          <h4 class="title"><a href="">Savings Goals</a></h4>
+          <p class="description">Set and track your savings goals to ensure you are on track to meet your financial objectives.</p>
+        </div>
+      </div><!-- End Icon Box -->
+
+      <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="400">
+        <div class="icon-box">
+          <div class="icon"><i class="bi bi-file-earmark-spreadsheet"></i></div>
+          <h4 class="title"><a href="">Detailed Reports</a></h4>
+          <p class="description">Generate and download detailed reports to analyze your spending patterns and improve your financial habits.</p>
+        </div>
+      </div><!-- End Icon Box -->
+
+    </div>
+  </div>
+
+</section><!-- /Hero Section -->
+    <!-- Clients Section -->
+<section id="clients" class="clients section light-background">
+
+  <div class="container" data-aos="fade-up">
+
+    <div class="row gy-4">
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-1.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-2.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-3.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-4.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-5.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+      <div class="col-xl-2 col-md-3 col-6 client-logo">
+        <img src="{%static 'assets/img/clients/client-6.png' %}" class="img-fluid" alt="">
+      </div><!-- End Client Item -->
+
+    </div>
+
+  </div>
+
+</section><!-- /Clients Section -->
+<!-- Call To Action Section -->
+<section id="call-to-action" class="call-to-action section accent-background">
+
+    <div class="container">
+      <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-xl-10">
+          <div class="text-center">
+            <h3>Call To Action</h3>
+            <p>Our easy-to-use platform helps you monitor and manage your finances effectively. Whether you're tracking personal or business expenses, you can stay on top of your budget and financial goals.</p>
+            <a class="cta-btn" href="#">Call To Action</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /Call To Action Section -->
+
+<section id="faq" class="faq section light-background">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Frequently Asked Questions</h2>
+    <p>Have questions about tracking your expenses? Check out the answers to the most commonly asked questions below.</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="faq-container">
+
+          <div class="faq-item faq-active">
+            <h3>How do I start tracking my expenses?</h3>
+            <div class="faq-content">
+              <p>Simply sign up, add your expense categories, and start recording your daily expenses. Our platform will help you categorize and analyze them for easy tracking.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Can I track both personal and business expenses?</h3>
+            <div class="faq-content">
+              <p>Yes, you can create separate categories for personal and business expenses to keep them organized and distinct.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>Will I be able to generate reports?</h3>
+            <div class="faq-content">
+              <p>Yes, our platform allows you to generate detailed reports on your expenses, helping you monitor spending trends and make informed financial decisions.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item">
+            <h3>What is an expense tracker and how does it work?</h3>
+            <div class="faq-content">
+              <p>An expense tracker is a tool designed to help individuals or businesses monitor and manage their spending. It works by categorizing expenses and providing reports to help users track their financial habits, budget efficiently, and stay on top of their financial goals.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+          
+          <div class="faq-item">
+            <h3>How can I categorize my expenses?</h3>
+            <div class="faq-content">
+              <p>Expenses can be categorized into various groups like groceries, transportation, utilities, entertainment, and more. By assigning categories to each expense, users can track their spending in a more organized manner and gain insights into their spending patterns.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+          
+          <div class="faq-item">
+            <h3>Can I track both personal and business expenses with the tracker?</h3>
+            <div class="faq-content">
+              <p>Yes, our expense tracker allows you to manage both personal and business expenses separately. You can create different categories or profiles for personal and business expenses to keep them organized and distinct, making it easy to track both aspects of your finances.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->          
+
+        </div>
+
+      </div><!-- End Faq Column-->
+
+    </div>
+
+
+  </main>
+{% endblock %}
+{% if not hide_footer %}
+<footer id="footer" class="footer dark-background fixed-bottom w-100 style="padding: 10px 20px;">
+  <div class="container footer-bottom">
+    <div class="row gy-4">
+      <div class="col-lg-5 col-md-12 footer-about">
+        <a href="base.html" class="logo d-flex align-items-center">
+          <span class="sitename">Dimba</span>
+        </a>
+        <p>Your go-to app for tracking personal and business expenses. Stay on top of your budget, track spending habits, and manage your finances effectively.</p>
+        <div class="social-links d-flex mt-4">
+          <a href=""><i class="bi bi-twitter-x"></i></a>
+          <a href=""><i class="bi bi-facebook"></i></a>
+          <a href=""><i class="bi bi-instagram"></i></a>
+          <a href=""><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-6 footer-links">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Track Expenses</a></li>
+          <li><a href="#">Reports</a></li>
+          <li><a href="#">Terms of service</a></li>
+          <li><a href="#">Privacy policy</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-2 col-6 footer-links">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="{% url 'dimba_app:track_expenses' %}">Track Expenses</a></li>
+          <li><a href="{% url 'dimba_app:reports' %}">Reporting</a></li>
+          <li><a href="#">Finance Management</a></li>
+          <li><a href="{% url 'dimba_app:savings' %}">Savings</a></li>
+          <li><a href="#">Financial Literacy</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+        <h4>Contact Us</h4>
+        <p>Tom Mboya Street</p>
+        <p>Nairobi, 535022</p>
+        <p>Kenya</p>
+        <p class="mt-4"><strong>Phone:</strong> <span>+254 743 285 574</span></p>
+        <p><strong>Email:</strong> <span>info@dimba.com</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container copyright text-center mt-4">
+    <p>© <span>Copyright</span> <strong class="px-1 sitename">Dimba</strong> <span>All Rights Reserved</span></p>
+    <div class="credits">
+      Designed by <a href="https://bootstrapmade.com/">Dimba Tech</a>
+    </div>
+  </div>
+</footer>
+{% endif %}
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{%static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{%static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{%static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{%static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{%static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

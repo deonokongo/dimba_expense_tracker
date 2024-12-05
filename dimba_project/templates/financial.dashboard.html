@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Financial Dashboard {% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Financial Overview</h2>
+
+<div class="container">
+    <canvas id="financialPieChart"></canvas>
+</div>
+
+<script>
+    var ctx = document.getElementById('financialPieChart').getContext('2d');
+    var financialPieChart = new Chart(ctx, {
+        type: 'pie',  // Define chart type
+        data: {
+            labels: ['Expenses', 'Savings', 'Loans'],  // Labels for the chart
+            datasets: [{
+                label: 'Financial Overview',
+                data: [
+                    {{ total_expenses }},  // Data passed from the view for expenses
+                    {{ total_savings }},   // Data passed from the view for savings
+                    {{ total_loans }}      // Data passed from the view for loans
+                ],
+                backgroundColor: ['#FF5733', '#28A745', '#007BFF'],  // Colors for the sections
+                borderColor: ['#FF5733', '#28A745', '#007BFF'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2);  // Format the tooltip value
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
